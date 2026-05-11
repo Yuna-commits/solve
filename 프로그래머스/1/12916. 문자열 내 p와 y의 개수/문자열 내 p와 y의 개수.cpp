@@ -1,23 +1,22 @@
 #include <string>
-#include <algorithm>
-
+#include <iostream>
 using namespace std;
 
 bool solution(string s)
 {
     bool answer = true;
 
-    int p = count_if(s.begin(), s.end(), [](char ch) {
-        return ch == 'p' || ch == 'P';
-    });
+    int p = 0;
+    int y = 0;
     
-    int y = count_if(s.begin(), s.end(), [](char ch) {
-        return ch == 'y' || ch =='Y';
-    });
-    
-    if(p != y) {
-        return false;
+    for(int i=0; i<s.length(); i++) {
+        if(s[i] == 'p' || s[i] == 'P') {
+            p++;
+        }
+        if(s[i] == 'y' || s[i] == 'Y') {
+            y++;
+        }
     }
-    
-    return answer;
+
+    return p == y;
 }
