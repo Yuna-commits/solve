@@ -5,11 +5,10 @@
 using namespace std;
 
 vector<int> solution(vector<int> arr) {
-    if(arr.size() == 1) {
-        return {-1};
+    int index = min_element(arr.begin(), arr.end()) - arr.begin();
+    arr.erase(arr.begin() + index);
+    if(arr.size() == 0) {
+        arr.push_back(-1);
     }
-    
-    arr.erase(min_element(arr.begin(), arr.end()));
-    
     return arr;
 }
