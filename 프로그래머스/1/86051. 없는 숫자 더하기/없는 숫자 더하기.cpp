@@ -1,16 +1,12 @@
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <iostream>
 
 using namespace std;
 
 int solution(vector<int> numbers) {
-    int answer = 0;
-    for(int i=0; i<10;i++) {
-        if(find(numbers.begin(), numbers.end(), i) == numbers.end()) {
-            answer+=i;
-        }
+    int answer = 45;
+    for(int n : numbers) {
+        answer -= n;
     }
     return answer;
 }
