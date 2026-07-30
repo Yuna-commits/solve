@@ -6,19 +6,15 @@
 using namespace std;
 
 vector<int> solution(vector<int> arr, int divisor) {
-    for(auto it=arr.begin(); it!=arr.end();) {
-        if((*it)%divisor != 0) {
-            it = arr.erase(it);
-        } else {
-            it++;
+    vector<int> answer;
+    
+    for(auto n : arr) {
+        if(n%divisor==0) {
+            answer.push_back(n);
         }
     }
     
-    sort(arr.begin(), arr.end());
+    sort(answer.begin(), answer.end());
     
-    if(arr.empty()) {
-        arr.push_back(-1);
-    }
-    
-    return arr;
+    return (answer.empty() ? vector<int>{-1} : answer);
 }
