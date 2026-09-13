@@ -1,13 +1,23 @@
-import java.util.Arrays;
-import java.util.stream.LongStream;
+import java.util.*;
 
 class Solution {
-    public int[] solution(int[] lottos, int[] winNums) {
-        return LongStream.of(
-                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(winNums).anyMatch(w -> w == l) || l == 0).count(),
-                (lottos.length + 1) - Arrays.stream(lottos).filter(l -> Arrays.stream(winNums).anyMatch(w -> w == l)).count()
-        )
-                .mapToInt(op -> (int) (op > 6 ? op - 1 : op))
-                .toArray();
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int match = 0;
+        
+        List<Integer> lotto = Arrays.stream(lottos).boxed().toList();
+        List<Integer> win = Arrays.stream(win_nums).boxed().toList();
+        
+        int zero = Collections.frequency(lotto, 0);
+        
+        for(int num : lotto) {
+            if(win.contains(num)) {
+                match++;
+            }
+        }
+        
+        int max = Math.min(7 - (match + zero), 6);
+        int min = Math.min(7 - match, 6);
+        
+        return new int[] {max, min};
     }
 }
