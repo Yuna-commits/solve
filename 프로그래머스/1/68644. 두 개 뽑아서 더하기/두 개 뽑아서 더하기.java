@@ -1,6 +1,6 @@
 import java.util.*;
 class Solution {
-    public List<Integer> solution(int[] numbers) {
+    public int[] solution(int[] numbers) {
         Set<Integer> set = new HashSet<>();
         
         for(int i=0; i<numbers.length; i++) {
@@ -9,9 +9,13 @@ class Solution {
             }
         }
         
-        List<Integer> answer = new ArrayList<>(set);
+        int[] answer = new int[set.size()];
+        int idx = 0;
+        for(int num : set) {
+            answer[idx++] = num;
+        }
         
-        Collections.sort(answer);
+        Arrays.sort(answer);
         
         return answer;
     }
