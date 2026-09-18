@@ -5,40 +5,29 @@ class Solution {
         int n = id_list.length;
         int[] answer = new int[n];
         
-        // reported [신고자][신고당한사람]
-        boolean[][] reported = new boolean [n][n];
-        
-        // 이름 -> 인덱스 매핑
+        // 이름 -> 순서 매핑
         Map<String, Integer> index = new HashMap<>();
+        // 신고당한 사람 -> {신고한 사람 목록}
+        Map<String, Set<String>> reporters = new HashMap<>();
         
         for(int i=0; i<n; i++) {
             index.put(id_list[i], i);
+            reporters.put(id_list[i], new HashSet<>());
         }
         
-        // 신고 관계
         for(String r : report) {
-            String[] line = r.split(" ");
-            reported[index.get(line[0])][index.get(line[1])] = true;
+            String[] split = r.split(" ");
+            // split[1]을 신고한 사람을 목록에 추가
+            reporters.get(split[1]).add(split[0]);
         }
         
-        // 신고 횟수
-        int[] count = new int[n];
-        
-        for(int from=0; from<n; from++) {
-            for(int to=0; to<n; to++) {
-                if(reported[from][to]) {
-                    count[to]++;
-                }
-            }
-        }
-        
-        // 메일 발송
-        for(int to=0; to<n; to++) {
-            if(count[to] >= k) {
-                for(int from=0; from<n; from++) {
-                    if(reported[from][to]) {
-                        answer[from]++;
-                    }
+        // 신고 횟수가 k 이상이면 신고한 모든 사람에게 메일 전송
+        for(String userId : id_list) {
+            // 신고한 사람 목록 set
+            Set<String> set = reporters.get(userId);
+            if(set.size() >= k) {
+                for(String r : set) {
+                    answer[index.get(r)]++;
                 }
             }
         }
