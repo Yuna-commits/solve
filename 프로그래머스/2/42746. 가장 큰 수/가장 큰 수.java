@@ -22,8 +22,12 @@ class Solution {
             return "0";
         }
         
-        String answer = String.join("", numToStr);
+        StringBuilder sb = new StringBuilder();
         
-        return answer;
+        for(String str : numToStr) {
+            sb.append(str);
+        }
+        
+        return sb.toString();
     }
 }
