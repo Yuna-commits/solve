@@ -4,8 +4,16 @@ class Solution {
     public String solution(String s) {
         String[] split = s.split(" ");
         
-        Arrays.sort(split, (s1, s2) -> Integer.compare(Integer.parseInt(s1), Integer.parseInt(s2)));
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
         
-        return String.join(" ", split[0], split[split.length-1]);
+        for(String str : split) {
+            int num = Integer.parseInt(str);
+            
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
+        
+        return min + " " + max;
     }
 }
