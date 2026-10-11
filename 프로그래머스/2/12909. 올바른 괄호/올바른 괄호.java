@@ -2,25 +2,19 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
+        int count = 0;
         
         for(char c : s.toCharArray()) {
-            // 여는 괄호면 스택에 삽입
-            if(c == '(') {
-                stack.push(c);
-            }
-            // 닫는 괄호면
-            else {
-                // 짝이 되는 괄호가 없으면 false
-                if(stack.isEmpty()) {
-                    return false;
-                }
-                // 여는 괄호 하나 제거
-                stack.pop();
+            // 여는 괄호면 count 증가, 닫는 괄호면 count 감소
+            count+=(c == '(' ? 1 : -1);
+            
+            // 닫는 괄호가 여는 괄호보다 많으면 count 음수
+            if(count < 0 ) {
+                return false;
             }
         }
 
-        // 스택이 비어 있어야 모든 괄호의 짝이 맞음
-        return stack.isEmpty();
+        // 괄호 짝이 맞으면 count == 0
+        return count == 0;
     }
 }
