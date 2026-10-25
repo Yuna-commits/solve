@@ -2,39 +2,44 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        // 최소 힙
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        // 최대 힙
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
-        
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+
         for(String op : operations) {
             String[] split = op.split(" ");
             
             switch(split[0]) {
                 case "I":
                     int value = Integer.parseInt(split[1]);
-                    minHeap.offer(value);
-                    maxHeap.offer(value);
+                    treeMap.put(value, treeMap.getOrDefault(value, 0) + 1);
                     break;
                 case "D":
-                    if(minHeap.isEmpty() && maxHeap.isEmpty()) {
+                    if(treeMap.isEmpty()) {
                         continue;
                     }
                     
+                    int delete = 0;
+                    
                     switch(split[1]) {
-                        case "1" :
-                            minHeap.remove(maxHeap.poll());
+                        case "1":
+                            delete = treeMap.lastKey();
                             break;
                         case "-1":
-                            maxHeap.remove(minHeap.poll());
+                            delete = treeMap.firstKey();
                             break;
                     }
+                                
+                    if(treeMap.get(delete) > 1) {
+                        treeMap.put(delete, treeMap.get(delete) - 1);
+                    } else {
+                        treeMap.remove(delete);
+                    }
+                    
                     break;
             }
         }
         
-        return (minHeap.isEmpty() && maxHeap.isEmpty() 
+        return (treeMap.isEmpty() 
                 ? new int[] {0, 0} 
-                : new int[] {maxHeap.peek(), minHeap.peek()});
+                : new int[] {treeMap.lastKey(), treeMap.firstKey()});
     }
 }
